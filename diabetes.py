@@ -18,8 +18,8 @@ st.title("Health Risk Prediction App")
 # Diabetes Prediction Section
 st.header("Diabetes Prediction with Selected Features")
 
-# Define the selected features based on the model's training
-selected_features = ['age', 'weight_kg', 'height_cm', 'bmi', 'sys_bp', 'dia_bp', 'glucose']
+# # Define the selected features based on the model's training
+# selected_features = ['age', 'weight_kg', 'height_cm', 'bmi', 'sys_bp', 'dia_bp', 'glucose']
 
 # Input form for user data (Diabetes)
 with st.form("user_input_form"):
