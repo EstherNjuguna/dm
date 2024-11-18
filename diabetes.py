@@ -5,7 +5,11 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
 # Load the saved model and scaler for diabetes prediction
-model = joblib.load('random_forest_model1.pkl')
+try:
+    model = joblib.load('random_forest_model1.pkl')
+except Exception as e:
+    st.error(f"Error loading the model: {e}")
+
 scaler = joblib.load('scaler.pkl')  # Load the scaler used during model training
 
 # Streamlit app structure
