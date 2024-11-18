@@ -5,14 +5,16 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
 # Load the saved model and scaler for diabetes prediction
-model = joblib.load('random_forest_model1.pkl')
-scaler = joblib.load('scaler.pkl') 
+model = joblib.load('random_forest_model.pkl')
+scaler = joblib.load('scaler.pkl')  # Load the scaler used during model training
 
 # Streamlit app structure
 st.title("Health Risk Prediction App")
 
 # Diabetes Prediction Section
 st.header("Diabetes Prediction with Selected Features")
+
+selected_features = ['age', 'weight_kg', 'height_cm', 'bmi', 'sys_bp', 'dia_bp', 'glucose']
 
 # Input form for user data (Diabetes)
 with st.form("user_input_form"):
