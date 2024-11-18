@@ -1,11 +1,11 @@
 import streamlit as st
 import joblib
 import pandas as pd
-from sklearn.preprocessing import StandardScaler 
+from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
 # Load the saved model and scaler for diabetes prediction
-model = joblib.load('random_forest_model.pkl')
+model = joblib.load('random_forest_model1.pkl')
 scaler = joblib.load('scaler.pkl')  # Load the scaler used during model training
 
 # Streamlit app structure
@@ -14,6 +14,7 @@ st.title("Health Risk Prediction App")
 # Diabetes Prediction Section
 st.header("Diabetes Prediction with Selected Features")
 
+# Define the selected features based on the model's training
 selected_features = ['age', 'weight_kg', 'height_cm', 'bmi', 'sys_bp', 'dia_bp', 'glucose']
 
 # Input form for user data (Diabetes)
@@ -30,7 +31,7 @@ with st.form("user_input_form"):
     submitted = st.form_submit_button("Predict Diabetes Risk")
 
 if submitted:
-    # Prepare the input data for diabetes prediction
+    # Prepare the input data for diabetes prediction, using only the selected features
     input_data = pd.DataFrame({
         'age': [age],
         'weight_kg': [weight_kg],
@@ -40,9 +41,9 @@ if submitted:
         'dia_bp': [dia_bp],
         'glucose': [glucose]
     })
-
+    
     # Apply the same scaling as was done during training
-    input_data_scaled = scaler.transform(input_data)
+    input_data_scaled = scaler.transform(input_data[selected_features])  # Only scale the selected features
     
     # Make prediction for diabetes
     prediction = model.predict(input_data_scaled)
