@@ -4,6 +4,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
+# Load the trained model and scaler
 try:
     model = joblib.load('random_forest_resampled.pkl')
 except FileNotFoundError:
@@ -22,60 +23,66 @@ except Exception as e:
     st.error(f"Unexpected error loading the scaler: {e}")
     st.stop()
 
-
 # Streamlit app structure
-st.title("Health Risk Prediction App")
+st.title("Diabetes and Depression Risk scores")
 
 # Diabetes Prediction Section
-st.header("Diabetes Prediction with Selected Features")
+st.header("Diabetes Prediction")
 
 # Define the selected features based on the model's training
 selected_features = ['age', 'weight_kg', 'height_cm', 'bmi', 'sys_bp', 'dia_bp', 'glucose']
 
 # Input form for user data (Diabetes)
 with st.form("user_input_form"):
-
     age = st.number_input("Age", min_value=0, step=1)
     weight_kg = st.number_input("Weight (kg)", min_value=0.0, step=0.1)
     height_cm = st.number_input("Height (cm)", min_value=0.0, step=0.1)
-    bmi = st.number_input("BMI", min_value=0.0, step=0.1)
-    sys_bp = st.number_input("Systolic Blood Pressure", min_value=0.0, step=0.1)
-    dia_bp = st.number_input("Diastolic Blood Pressure", min_value=0.0, step=0.1)
-    glucose = st.number_input("Glucose Level", min_value=0.0, step=0.1)
     
+    # Calculate BMI dynamically
+    if height_cm > 0:
+        height_m = height_cm / 100  # Convert height to meters
+        bmi = weight_kg / (height_m ** 2)
+        st.write(f"Calculated BMI: {bmi:.2f}")
+    else:
+        bmi = 0
+        st.error("Height must be greater than 0 to calculate BMI.")
+
+    sys_bp = st.number_input("Systolic Blood Pressure (mmHg)", min_value=0.0, step=0.1)
+    dia_bp = st.number_input("Diastolic Blood Pressure (mmHg)", min_value=0.0, step=0.1)
+    glucose = st.number_input("Glucose Level (mg/dL)", min_value=0.0, step=0.1)
+
     # Submit button for diabetes prediction
     submitted = st.form_submit_button("Predict Diabetes Risk")
 
 if submitted:
+    # Validate user inputs
     if weight_kg <= 0 or height_cm <= 0 or bmi <= 0:
         st.error("Weight, height, and BMI must be positive values.")
     elif sys_bp < 0 or dia_bp < 0:
         st.error("Blood pressure values cannot be negative.")
     else:
-    # Process the input as usual
-
-    # Prepare the input data for diabetes prediction, using only the selected features
+        # Prepare the input data for diabetes prediction, using only the selected features
         input_data = pd.DataFrame({
-        'age': [age],
-        'weight_kg': [weight_kg],
-        'height_cm': [height_cm],
-        'bmi': [bmi],
-        'sys_bp': [sys_bp],
-        'dia_bp': [dia_bp],
-        'glucose': [glucose]
-    })
-    
-    # Apply the same scaling as was done during training
-    input_data_scaled = scaler.transform(input_data[selected_features])  # Only scale the selected features
-    
-    # Make prediction for diabetes
-    prediction = model.predict(input_data_scaled)
-    
-    # Display the result for diabetes prediction
-    if prediction[0] == 1:
-        st.success("The model predicts a risk of diabetes.")
-    else:
-        st.success("The model predicts no risk of diabetes.")
+            'age': [age],
+            'weight_kg': [weight_kg],
+            'height_cm': [height_cm],
+            'bmi': [bmi],
+            'sys_bp': [sys_bp],
+            'dia_bp': [dia_bp],
+            'glucose': [glucose]
+        })
+        
+        # Apply the same scaling as was done during training
+        input_data_scaled = scaler.transform(input_data[selected_features])  # Only scale the selected features
+        
+        # Make prediction for diabetes
+        prediction = model.predict(input_data_scaled)
+        
+        # Display the result for diabetes prediction
+        if prediction[0] == 1:
+            st.success("The model predicts a risk of diabetes.")
+        else:
+            st.success("The model predicts no risk of diabetes.")
 
 # Depression Risk Assessment Section (PH9)
 st.header("Depression Risk Assessment (PH9)")
