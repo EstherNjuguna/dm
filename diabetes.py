@@ -30,11 +30,6 @@ st.markdown(
         margin-bottom: 10px;
     }
 
-    /* Error Styling */
-    .stAlert {
-        border: 2px solid #FF5733; /* Red border for error messages */
-        border-radius: 5px;
-    }
 
     /* Submit Button Styling */
     .stButton > button {
@@ -79,7 +74,7 @@ except Exception as e:
 
 
 # Diabetes Prediction Section
-st.header("### :green[Diabetes Prediction]")
+st.markdown("### :green[Diabetes Prediction]")
 
 # Define the selected features based on the model's training
 selected_features = ['age', 'weight_kg', 'height_cm', 'bmi', 'sys_bp', 'dia_bp', 'glucose']
@@ -137,7 +132,7 @@ if submitted:
             st.success("No risk of diabetes.")
 
 # Depression Risk Assessment Section (PH9)
-st.header("### :green[Depression Risk Assessment (PH9)]")
+st.markdown("### :green[Depression Risk Assessment (PH9)]")
 
 # Section for PH9 questions
 st.subheader("### :green[Please answer the following questions:]")
