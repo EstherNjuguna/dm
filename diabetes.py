@@ -4,13 +4,24 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# Load the saved model and scaler for diabetes prediction
 try:
-    model = joblib.load('random_forest_model1.pkl')
+    model = joblib.load('random_forest_resampled.pkl')
+except FileNotFoundError:
+    st.error("Model file not found. Please ensure the file is uploaded.")
+    st.stop()
 except Exception as e:
-    st.error(f"Error loading the model: {e}")
+    st.error(f"Unexpected error loading the model: {e}")
+    st.stop()
 
-scaler = joblib.load('scaler.pkl')  # Load the scaler used during model training
+try:
+    scaler = joblib.load('scaler.pkl')
+except FileNotFoundError:
+    st.error("Scaler file not found. Please ensure the file is uploaded.")
+    st.stop()
+except Exception as e:
+    st.error(f"Unexpected error loading the scaler: {e}")
+    st.stop()
+
 
 # Streamlit app structure
 st.title("Health Risk Prediction App")
@@ -18,11 +29,12 @@ st.title("Health Risk Prediction App")
 # Diabetes Prediction Section
 st.header("Diabetes Prediction with Selected Features")
 
-# # Define the selected features based on the model's training
-# selected_features = ['age', 'weight_kg', 'height_cm', 'bmi', 'sys_bp', 'dia_bp', 'glucose']
+# Define the selected features based on the model's training
+selected_features = ['age', 'weight_kg', 'height_cm', 'bmi', 'sys_bp', 'dia_bp', 'glucose']
 
 # Input form for user data (Diabetes)
 with st.form("user_input_form"):
+
     age = st.number_input("Age", min_value=0, step=1)
     weight_kg = st.number_input("Weight (kg)", min_value=0.0, step=0.1)
     height_cm = st.number_input("Height (cm)", min_value=0.0, step=0.1)
@@ -35,8 +47,15 @@ with st.form("user_input_form"):
     submitted = st.form_submit_button("Predict Diabetes Risk")
 
 if submitted:
+    if weight_kg <= 0 or height_cm <= 0 or bmi <= 0:
+        st.error("Weight, height, and BMI must be positive values.")
+    elif sys_bp < 0 or dia_bp < 0:
+        st.error("Blood pressure values cannot be negative.")
+    else:
+    # Process the input as usual
+
     # Prepare the input data for diabetes prediction, using only the selected features
-    input_data = pd.DataFrame({
+        input_data = pd.DataFrame({
         'age': [age],
         'weight_kg': [weight_kg],
         'height_cm': [height_cm],
