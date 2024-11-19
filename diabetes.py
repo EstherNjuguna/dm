@@ -3,6 +3,22 @@ import joblib
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
+st.markdown(
+    """
+    <style>
+    .title {
+        color: #4CAF50;
+        font-size: 32px;
+        text-align: center;
+        font-weight: bold;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown('<div class="title">Diabetes and Depression Risk scores</div>', unsafe_allow_html=True)
+
 
 # Load the trained model and scaler
 try:
@@ -49,7 +65,7 @@ with st.form("user_input_form"):
 
     sys_bp = st.number_input("Systolic Blood Pressure (mmHg)", min_value=0.0, step=0.1)
     dia_bp = st.number_input("Diastolic Blood Pressure (mmHg)", min_value=0.0, step=0.1)
-    glucose = st.number_input("Glucose Level (mg/dL)", min_value=0.0, step=0.1)
+    glucose = st.number_input("Glucose Level ((µmol/L)", min_value=0.0, step=0.1)
 
     # Submit button for diabetes prediction
     submitted = st.form_submit_button("Predict Diabetes Risk")
