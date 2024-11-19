@@ -12,26 +12,42 @@ st.markdown(
         text-align: center;
         font-weight: bold;
     }
-    .input {
-        border: 2px solid #4CAF50;
-        border-radius: 5px;
-        padding: 8px;
-        color: #4CAF50;
+   
+/* Number Input Styling */
+    input[type="number"] {
+        border: 2px solid #4CAF50; /* Green border */
+        border-radius: 5px; /* Rounded corners */
+        padding: 5px; /* Padding for better appearance */
+        color: #4CAF50; /* Green text */
+        font-weight: bold; /* Bold input text */
     }
-    .stTextInput>div>input {
-        border: 2px solid #4CAF50;
-        border-radius: 5px;
-        color: green;
-    }
-    .stNumberInput>div>input {
-        border: 2px solid #4CAF50;
-        border-radius: 5px;
-        color: green;
-    }
-        /* General Text Styling */
-    body, .stMarkdown, .stTextInput, .stNumberInput, .stButton {
-        color: #4CAF50; /* Green text for most elements */
 
+    /* Radio Button Styling */
+    .stRadio > div {
+        border: 2px solid #4CAF50; /* Green border */
+        border-radius: 5px; /* Rounded corners */
+        padding: 10px; /* Padding for better appearance */
+        margin-bottom: 10px;
+    }
+
+    /* Error Styling */
+    .stAlert {
+        border: 2px solid #FF5733; /* Red border for error messages */
+        border-radius: 5px;
+    }
+
+    /* Submit Button Styling */
+    .stButton > button {
+        background-color: #4CAF50; /* Green background */
+        color: white; /* White text */
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+    .stButton > button:hover {
+        background-color: #45a049; /* Darker green on hover */
+    }
 
     </style>
     """,
@@ -63,32 +79,32 @@ except Exception as e:
 
 
 # Diabetes Prediction Section
-st.header("Diabetes Prediction")
+st.header("### :green[Diabetes Prediction]")
 
 # Define the selected features based on the model's training
 selected_features = ['age', 'weight_kg', 'height_cm', 'bmi', 'sys_bp', 'dia_bp', 'glucose']
 
 # Input form for user data (Diabetes)
 with st.form("user_input_form"):
-    age = st.number_input("Age", min_value=0, step=1)
-    weight_kg = st.number_input("Weight (kg)", min_value=0.0, step=0.1)
-    height_cm = st.number_input("Height (cm)", min_value=0.0, step=0.1)
+    age = st.number_input("### :green[Age]", min_value=0, step=1)
+    weight_kg = st.number_input("### :green [Weight (kg)]", min_value=0.0, step=0.1)
+    height_cm = st.number_input("### :green[Height (cm)]", min_value=0.0, step=0.1)
     
     # Calculate BMI dynamically
     if height_cm > 0:
         height_m = height_cm / 100  # Convert height to meters
         bmi = weight_kg / (height_m ** 2)
-        st.write(f"Calculated BMI: {bmi:.2f}")
+        st.write(f"### :green[Calculated BMI: {bmi:.2f}]")
     else:
         bmi = 0
-        st.error("Height must be greater than 0 to calculate BMI.")
+        st.error("### :green[Height must be greater than 0 to calculate BMI.]")
 
-    sys_bp = st.number_input("Systolic Blood Pressure (mmHg)", min_value=0.0, step=0.1)
-    dia_bp = st.number_input("Diastolic Blood Pressure (mmHg)", min_value=0.0, step=0.1)
-    glucose = st.number_input("Glucose Level ((µmol/L)", min_value=0.0, step=0.1)
+    sys_bp = st.number_input("### :green[Systolic Blood Pressure (mmHg)]", min_value=0.0, step=0.1)
+    dia_bp = st.number_input("### :green[Diastolic Blood Pressure (mmHg)]", min_value=0.0, step=0.1)
+    glucose = st.number_input("### :green[Glucose Level ((µmol/L)]", min_value=0.0, step=0.1)
 
     # Submit button for diabetes prediction
-    submitted = st.form_submit_button("Predict Diabetes Risk")
+    submitted = st.form_submit_button("### :green[Predict Diabetes Risk]")
 
 if submitted:
     # Validate user inputs
@@ -116,15 +132,15 @@ if submitted:
         
         # Display the result for diabetes prediction
         if prediction[0] == 1:
-            st.success("The model predicts a risk of diabetes.")
+            st.success("At risk of diabetes.")
         else:
-            st.success("The model predicts no risk of diabetes.")
+            st.success("No risk of diabetes.")
 
 # Depression Risk Assessment Section (PH9)
-st.header("Depression Risk Assessment (PH9)")
+st.header("### :green[Depression Risk Assessment (PH9)]")
 
 # Section for PH9 questions
-st.subheader("Please answer the following questions:")
+st.subheader("### :green[Please answer the following questions:]")
 
 # PH9 Questions
 ph9_answers = {
