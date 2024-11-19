@@ -135,7 +135,7 @@ if submitted:
 st.markdown("### :green[Depression Risk Assessment (PH9)]")
 
 # Section for PH9 questions
-st.subheader("### :green[Please answer the following questions:]")
+st.markdown("#### :green[Please answer the following questions:]")
 
 # PH9 Questions
 ph9_answers = {
