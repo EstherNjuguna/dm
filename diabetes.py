@@ -12,17 +12,26 @@ st.markdown(
         text-align: center;
         font-weight: bold;
     }
-    input {
-    background-color: #E8F5E9; /* Light green background */
-}
+    .input {
+        border: 2px solid #4CAF50;
+        border-radius: 5px;
+        padding: 8px;
+        color: #4CAF50;
+    }
+    .stTextInput>div>input {
+        border: 2px solid #4CAF50;
+        border-radius: 5px;
+        color: green;
+    }
+    .stNumberInput>div>input {
+        border: 2px solid #4CAF50;
+        border-radius: 5px;
+        color: green;
+    }
+        /* General Text Styling */
+    body, .stMarkdown, .stTextInput, .stNumberInput, .stButton {
+        color: #4CAF50; /* Green text for most elements */
 
-textarea {
-    background-color: #E8F5E9;
-}
-
-select {
-    background-color: #E8F5E9;
-}
 
     </style>
     """,
