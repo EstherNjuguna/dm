@@ -86,7 +86,7 @@ with st.form("user_input_form"):
     height_cm = st.number_input("### :green[Height (cm)]", min_value=0.0, step=0.1)
     
     # Calculate BMI dynamically
-    if height_cm >= 0:
+    if height_cm > 0:
         height_m = height_cm / 100  # Convert height to meters
         bmi = weight_kg / (height_m ** 2)
         st.write(f"### :green[Calculated BMI: {bmi:.2f}]")
