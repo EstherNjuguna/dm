@@ -12,6 +12,18 @@ st.markdown(
         text-align: center;
         font-weight: bold;
     }
+    input {
+    background-color: #E8F5E9; /* Light green background */
+}
+
+textarea {
+    background-color: #E8F5E9;
+}
+
+select {
+    background-color: #E8F5E9;
+}
+
     </style>
     """,
     unsafe_allow_html=True
@@ -39,8 +51,7 @@ except Exception as e:
     st.error(f"Unexpected error loading the scaler: {e}")
     st.stop()
 
-# Streamlit app structure
-st.title("Diabetes and Depression Risk scores")
+
 
 # Diabetes Prediction Section
 st.header("Diabetes Prediction")
