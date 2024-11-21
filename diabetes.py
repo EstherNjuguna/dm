@@ -54,7 +54,7 @@ st.markdown('<div class="title">Diabetes and Depression Risk scores</div>', unsa
 
 # Load the trained model and scaler
 try:
-    model = joblib.load('random_forest_resampled.pkl')
+    model = joblib.load('random_forest_model.pkl')
 except FileNotFoundError:
     st.error("Model file not found. Please ensure the file is uploaded.")
     st.stop()
@@ -82,7 +82,7 @@ selected_features = ['age', 'weight_kg', 'height_cm', 'bmi', 'sys_bp', 'dia_bp',
 # Input form for user data (Diabetes)
 with st.form("user_input_form"):
     age = st.number_input("### :green[Age]", min_value=0, step=1)
-    weight_kg = st.number_input("### :green [Weight (kg)]", min_value=0.0, step=0.1)
+    weight_kg = st.number_input("### :green[Weight (kg)]", min_value=0.0, step=0.1)
     height_cm = st.number_input("### :green[Height (cm)]", min_value=0.0, step=0.1)
     
     # Calculate BMI dynamically
@@ -118,7 +118,15 @@ if submitted:
         })
         
         # Apply the same scaling as was done during training
-        input_data_scaled = scaler.transform(input_data[selected_features])  # Only scale the selected features
+        input_data = input_data[selected_features]
+
+        # Apply scaling
+        try:
+            input_data_scaled = scaler.transform(input_data)
+        except ValueError as e:
+            st.error(f"Feature mismatch error: {e}")
+            st.stop()
+             # Only scale the selected features
         
         # Make prediction for diabetes
         prediction = model.predict(input_data_scaled)
